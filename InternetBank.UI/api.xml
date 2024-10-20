@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>InternetBank.UI</name>
+    </assembly>
+    <members>
+        <member name="T:InternetBank.UI.Controllers.v1.UserController">
+            <summary>
+            UserController 
+            </summary>
+        </member>
+        <member name="M:InternetBank.UI.Controllers.v1.UserController.#ctor(Microsoft.AspNetCore.Identity.SignInManager{InternetBank.Core.Identity.ApplicationUser},Microsoft.AspNetCore.Identity.RoleManager{InternetBank.Core.Identity.ApplicationRole},InternetBank.Core.ServiceContracts.IUserService)">
+            <summary>
+            Inject Identity Services 
+            </summary>
+            <param name="userManager"></param>
+            <param name="signInManager"></param>
+            <param name="roleManager"></param>
+        </member>
+        <member name="M:InternetBank.UI.Controllers.v1.UserController.CreateUser(InternetBank.Core.DTO.RegisterUserDTO)">
+            <summary>
+            For checking some Validation and Create User Or Return errorMessage
+            </summary>
+            <param name="registerUserDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:InternetBank.UI.Controllers.v1.UserController.LoginUser(InternetBank.Core.DTO.LoginUserDTO)">
+            <summary>
+            Login user with information
+            </summary>
+            <param name="loginUser"></param>
+            <returns>FirstName , LastName , Email From user</returns>
+        </member>
+        <member name="M:InternetBank.UI.Controllers.v1.UserController.GetUserLogOut">
+            <summary>
+            Logout  User 
+            </summary>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

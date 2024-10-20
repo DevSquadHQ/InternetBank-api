@@ -1,0 +1,44 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.34916.146
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InternetBank.UI", "InternetBank.UI\InternetBank.UI.csproj", "{F5903A56-F8D5-49BD-A3F6-D9BEA69DAD8D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{D18A6997-A464-4C20-973E-3AC54B8263F2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InternetBank.Core", "InternetBank.Core\InternetBank.Core.csproj", "{7F5AEC6B-2FD5-4DBE-A297-852FF5CD2A5B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InternetBank.Infrastructure", "InternetBank.Infrastructure\InternetBank.Infrastructure.csproj", "{D0864F52-EAAD-4818-8E86-661267908749}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F5903A56-F8D5-49BD-A3F6-D9BEA69DAD8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5903A56-F8D5-49BD-A3F6-D9BEA69DAD8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5903A56-F8D5-49BD-A3F6-D9BEA69DAD8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5903A56-F8D5-49BD-A3F6-D9BEA69DAD8D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F5AEC6B-2FD5-4DBE-A297-852FF5CD2A5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F5AEC6B-2FD5-4DBE-A297-852FF5CD2A5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F5AEC6B-2FD5-4DBE-A297-852FF5CD2A5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F5AEC6B-2FD5-4DBE-A297-852FF5CD2A5B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0864F52-EAAD-4818-8E86-661267908749}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0864F52-EAAD-4818-8E86-661267908749}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0864F52-EAAD-4818-8E86-661267908749}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0864F52-EAAD-4818-8E86-661267908749}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F5903A56-F8D5-49BD-A3F6-D9BEA69DAD8D} = {D18A6997-A464-4C20-973E-3AC54B8263F2}
+		{7F5AEC6B-2FD5-4DBE-A297-852FF5CD2A5B} = {D18A6997-A464-4C20-973E-3AC54B8263F2}
+		{D0864F52-EAAD-4818-8E86-661267908749} = {D18A6997-A464-4C20-973E-3AC54B8263F2}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1E27B7E6-BBFB-4C05-8E99-00BACC4F0983}
+	EndGlobalSection
+EndGlobal
