@@ -3,14 +3,18 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace InternetBank.UI.Controllers.v1
 {
-    [Route("api/[controller]")]
-    [ApiController]
+    [ApiVersion("1.0")]
     public class AccountController : CustomControllerBase
     {
-        [HttpPost]
+        private readonly IAccountService _accountService;
+        public AccountController(IAccountService accountService)
+        {
+            _accountService= accountService;
+        }
+        [HttpPost("accountregister")]
         public async Task<IActionResult> Register([FromBody]RegisterAccountDTO registerAccountDTO){
-            var accounts = await _accountRepository.CreateAccount(registerAccountDTO);
-            return Ok(AccountId);
+            var accounts = await _accountService.CreateAccount(registerAccountDTO);
+            return Ok(accounts);
         }
     }
 }

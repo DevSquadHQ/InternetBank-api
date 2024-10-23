@@ -44,6 +44,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 builder.Services.AddScoped<IUserService,UsersService > ();
 builder.Services.AddTransient<IUsersRepository, UsersRepository>();
+builder.Services.AddScoped<IAccountsService,AccountsService>();
 builder.Services.AddTransient<IAccountRepository,AccountRepository>();
 
 

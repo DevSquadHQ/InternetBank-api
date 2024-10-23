@@ -7,7 +7,6 @@ using InternetBank.Core.Domain.RepositoryContracts;
 using InternetBank.Core.DTO;
 using InternetBank.Core.Identity;
 using Microsoft.AspNetCore.Identity;
-
 namespace InternetBank.Infrastructure.Repositories
 {
 	public class UsersRepository:IUsersRepository
@@ -21,7 +20,6 @@ namespace InternetBank.Infrastructure.Repositories
 		public async Task<IdentityResult> CreateUser(ApplicationUser user, RegisterUserDTO registerUserDto)
 		{
 			IdentityResult result = await _userManager.CreateAsync(user, registerUserDto.Password);
-
 			return result;
 		}
 
