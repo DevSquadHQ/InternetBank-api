@@ -1,9 +1,13 @@
 using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using InternetBank.Core.Enums;
 namespace InternetBank.Core.Domain.Entities;
 
 public class Account
 {
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public long AccountId { get; set; }
     //sets as a random number
     public string AccountNumber { get; set; }
@@ -16,5 +20,5 @@ public class Account
     public AccountType accountType { get; set; }
     //sets as a random number
     public string AccountStaticPassword { get; set; }
-    public string Amount { get; set; }
+    public int Amount { get; set; }
 }

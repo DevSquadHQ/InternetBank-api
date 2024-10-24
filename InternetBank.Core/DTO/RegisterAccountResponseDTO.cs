@@ -9,8 +9,9 @@ namespace InternetBank.Core.DTO
 {
     public class RegisterAccountResponseDTO
     {
-        public AccountType accountType { get; set; }
-        public string Amount { get; set; }
+		public long AccountId { get; set; }
+		public AccountType accountType { get; set; }
+        public int Amount { get; set; }
         //sets as a random number
         public string AccountNumber { get; set; }
         //sets as a random number

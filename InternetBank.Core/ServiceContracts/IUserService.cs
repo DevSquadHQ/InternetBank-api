@@ -14,5 +14,7 @@ namespace InternetBank.Core.ServiceContracts
 		Task<RegisterResultDTO> AddUser(RegisterUserDTO registerUserDto);
 		Task<ApplicationUser?> LoginUser(LoginUserDTO loginUserDto);
 
+		string GetUserId();
+
 	}
 }

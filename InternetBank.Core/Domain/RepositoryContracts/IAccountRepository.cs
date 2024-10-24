@@ -6,4 +6,6 @@ namespace InternetBank.Core.Domain.RepositoryContracts;
 public interface IAccountRepository
 {
     Task<Account> CreateAccount(Account account);
+    Task<Account> GetAccountById(long accountId);
+    Task<bool> ChangePassword(Account account);
 }
