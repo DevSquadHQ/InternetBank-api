@@ -20,5 +20,5 @@ public class Account
     public AccountType accountType { get; set; }
     //sets as a random number
     public string AccountStaticPassword { get; set; }
-    public int Amount { get; set; }
+    public long Amount { get; set; }
 }

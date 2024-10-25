@@ -11,7 +11,7 @@ namespace InternetBank.Core.DTO
     {
 		public long AccountId { get; set; }
 		public AccountType accountType { get; set; }
-        public int Amount { get; set; }
+        public long Amount { get; set; }
         //sets as a random number
         public string AccountNumber { get; set; }
         //sets as a random number

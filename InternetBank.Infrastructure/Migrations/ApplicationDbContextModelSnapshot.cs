@@ -38,8 +38,8 @@ namespace InternetBank.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("Amount")
-                        .HasColumnType("integer");
+                    b.Property<long>("Amount")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("CardNumber")
                         .IsRequired()

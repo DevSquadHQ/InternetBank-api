@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace InternetBank.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241024125354_AddAccount")]
+    [Migration("20241025070204_AddAccount")]
     partial class AddAccount
     {
         /// <inheritdoc />
@@ -41,8 +41,8 @@ namespace InternetBank.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("Amount")
-                        .HasColumnType("integer");
+                    b.Property<long>("Amount")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("CardNumber")
                         .IsRequired()
