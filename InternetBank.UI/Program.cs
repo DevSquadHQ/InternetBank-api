@@ -1,5 +1,6 @@
 using System.Text;
 using Asp.Versioning;
+using InternetBank.Core.Domain.Entities;
 using InternetBank.Core.Domain.RepositoryContracts;
 using InternetBank.Core.Identity;
 using InternetBank.Core.ServiceContracts;
@@ -44,6 +45,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 builder.Services.AddScoped<IUserService,UsersService > ();
 builder.Services.AddTransient<IUsersRepository, UsersRepository>();
+builder.Services.AddScoped<IAccountsService,AccountsService>();
+builder.Services.AddTransient<IAccountRepository,AccountRepository>();
+builder.Services.AddScoped<IPasswordHasher<Account>, PasswordHasher<Account>>();
 
 
 

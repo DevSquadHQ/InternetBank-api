@@ -4,6 +4,25 @@
         <name>InternetBank.UI</name>
     </assembly>
     <members>
+        <member name="T:InternetBank.UI.Controllers.v1.AccountController">
+            <summary>
+            Account Manager
+            </summary>
+        </member>
+        <member name="M:InternetBank.UI.Controllers.v1.AccountController.Register(InternetBank.Core.DTO.RegisterAccountDTO)">
+            <summary>
+            Create BankAccount for existing User
+            </summary>
+            <param name="registerAccountDTO"></param>
+            <returns></returns>
+        </member>
+        <member name="M:InternetBank.UI.Controllers.v1.AccountController.ChangePassword(InternetBank.Core.DTO.ChangeAccountPasswordDto)">
+            <summary>
+            Change BankAccount Password 
+            </summary>
+            <param name="accountPasswordDto"></param>
+            <returns></returns>
+        </member>
         <member name="T:InternetBank.UI.Controllers.v1.UserController">
             <summary>
             UserController 

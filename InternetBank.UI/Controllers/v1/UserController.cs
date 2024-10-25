@@ -65,6 +65,10 @@ namespace InternetBank.UI.Controllers.v1
 				
 				string errorMessage = 
 					string.Join(" | ", regesterResult.result.Errors.Select(e => e.Description));//Error1 | Error2 ....
+				if (regesterResult.ErrorMessage!=null)
+				{
+					return Problem(errorMessage+regesterResult.ErrorMessage , statusCode:409);
+				}
 
 				return Problem(errorMessage);
 			}

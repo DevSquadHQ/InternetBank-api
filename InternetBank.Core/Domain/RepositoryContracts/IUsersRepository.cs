@@ -14,5 +14,7 @@ namespace InternetBank.Core.Domain.RepositoryContracts
 		Task<IdentityResult> CreateUser(ApplicationUser user , RegisterUserDTO registerUserDto);
 
 		Task<ApplicationUser?> LoginUser(LoginUserDTO loginUserDto);
+
+		Task<bool> NationalCodeExistsAsync(string nationalCode);
 	}
 }

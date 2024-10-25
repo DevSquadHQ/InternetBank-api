@@ -12,5 +12,7 @@ namespace InternetBank.Core.DTO
 	{
 		public IdentityResult result { get; set; }	
 		public ApplicationUser user { get; set; }
+
+		public string? ErrorMessage { get; set; }
 	}
 }
