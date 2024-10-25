@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace InternetBank.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241025070204_AddAccount")]
+    [Migration("20241025103004_AddAccount")]
     partial class AddAccount
     {
         /// <inheritdoc />
@@ -54,6 +54,9 @@ namespace InternetBank.Infrastructure.Migrations
 
                     b.Property<DateTime>("ExpireDate")
                         .HasColumnType("timestamp with time zone");
+
+                    b.Property<byte>("IsBlocked")
+                        .HasColumnType("smallint");
 
                     b.Property<int>("accountType")
                         .HasColumnType("integer");

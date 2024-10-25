@@ -24,7 +24,8 @@ namespace InternetBank.Infrastructure.Migrations
                     ExpireDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     accountType = table.Column<int>(type: "integer", nullable: false),
                     AccountStaticPassword = table.Column<string>(type: "text", nullable: false),
-                    Amount = table.Column<long>(type: "bigint", nullable: false)
+                    Amount = table.Column<long>(type: "bigint", nullable: false),
+                    IsBlocked = table.Column<byte>(type: "smallint", nullable: false)
                 },
                 constraints: table =>
                 {

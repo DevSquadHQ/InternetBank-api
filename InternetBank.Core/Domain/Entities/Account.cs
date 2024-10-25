@@ -21,4 +21,6 @@ public class Account
     //sets as a random number
     public string AccountStaticPassword { get; set; }
     public long Amount { get; set; }
+
+    public byte IsBlocked { get; set; }
 }

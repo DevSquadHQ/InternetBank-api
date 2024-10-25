@@ -52,6 +52,9 @@ namespace InternetBank.Infrastructure.Migrations
                     b.Property<DateTime>("ExpireDate")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<byte>("IsBlocked")
+                        .HasColumnType("smallint");
+
                     b.Property<int>("accountType")
                         .HasColumnType("integer");
 
