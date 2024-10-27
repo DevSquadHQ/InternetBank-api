@@ -12,6 +12,10 @@ public interface IAccountsService
 
 	string GenerateCVV2();
 	string GenerateStaticPassword();
-    Task<RegisterAccountResponseDTO> CreateAccount(RegisterAccountDTO registerAccountDTO);
+    Task<RegisterAccountResultDTO> CreateAccount(RegisterAccountDTO registerAccountDTO);
     Task<ChangeAccountPasswordResponseDTO> ChangePassword(ChangeAccountPasswordDto accountPasswordDto);
+    Task<BalanceDTO> GetBalance(long AccountId);
+    Task BlockAccountAsync(long accountId);
+    Task UnblockAccountAsync(long accountId);
+
 }

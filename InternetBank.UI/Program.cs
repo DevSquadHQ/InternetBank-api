@@ -7,6 +7,7 @@ using InternetBank.Core.ServiceContracts;
 using InternetBank.Core.Services;
 using InternetBank.Infrastructure.DbContext;
 using InternetBank.Infrastructure.Repositories;
+using InternetBank.UI.Middleware;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
@@ -84,7 +85,11 @@ if (app.Environment.IsDevelopment())
 	{
 		options.SwaggerEndpoint("/swagger/v1/swagger.json","1.0");
 	}); //create swagger UI for testing all web ApI endpoints/ action methods
+
+	app.UseDeveloperExceptionPage();
 }
+
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

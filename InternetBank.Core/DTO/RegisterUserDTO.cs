@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using InternetBank.Core.Helpers;
+using System.Text.Json.Serialization;
 
 namespace InternetBank.Core.DTO
 {
@@ -18,6 +19,7 @@ namespace InternetBank.Core.DTO
 		[Required, ValidIranianNationalCode(ErrorMessage = "کدملی معتبر نمی باشد")]
 		public string NationalCode { get; set; }
 		[Required ,MinAge(18, ErrorMessage = "سن باید بالای 18 سال باشد.")]
+		[JsonConverter(typeof(CustomDateTimeConverter))]
 		public DateTime Birthdate { get; set; }
 
 		[Required]

@@ -2,6 +2,8 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using InternetBank.Core.Enums;
+using InternetBank.Core.Identity;
+
 namespace InternetBank.Core.Domain.Entities;
 
 public class Account
@@ -23,4 +25,7 @@ public class Account
     public long Amount { get; set; }
 
     public byte IsBlocked { get; set; }
+
+    public long UserId { get; set; }
+    public ApplicationUser User { get; set; }
 }

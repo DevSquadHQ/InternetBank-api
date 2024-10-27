@@ -6,6 +6,6 @@ public class RegisterAccountDTO
 {
     [Required]
     public AccountType accountType { get; set; }
-    [Required, Range(100000, int.MaxValue, ErrorMessage = "حداقل مقدار برای افتتاح حساب 100000 ریال می باشد")]
+    [Required, Range(100000, long.MaxValue, ErrorMessage = "حداقل مقدار برای افتتاح حساب 100000 ریال می باشد")]
     public long Amount { get; set; }
 }

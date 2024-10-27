@@ -1,4 +1,4 @@
-using Asp.Versioning;
+﻿using Asp.Versioning;
 using InternetBank.Core.DTO;
 using InternetBank.Core.ServiceContracts;
 using Microsoft.AspNetCore.Http;
@@ -25,8 +25,13 @@ namespace InternetBank.UI.Controllers.v1
         /// <returns></returns>
         [HttpPost("register")]
         public async Task<ActionResult<RegisterAccountResponseDTO>> Register([FromBody]RegisterAccountDTO registerAccountDTO){
-	        RegisterAccountResponseDTO accounts = await _accountsService.CreateAccount(registerAccountDTO);
-            return Ok(accounts);
+	        RegisterAccountResultDTO accounts = await _accountsService.CreateAccount(registerAccountDTO);
+	        if (accounts.success == false)
+	        {
+		        return Problem(accounts.message, statusCode: 401);
+	        }
+
+	        return Ok(accounts.responseAccountDto);
         }
 
         /// <summary>
@@ -34,7 +39,7 @@ namespace InternetBank.UI.Controllers.v1
         /// </summary>
         /// <param name="accountPasswordDto"></param>
         /// <returns></returns>
-        [HttpPost("change-password")]
+        [HttpPut("change-password")]
         public async Task<IActionResult> ChangePassword([FromBody] ChangeAccountPasswordDto accountPasswordDto)
         {
 	        var result = await _accountsService.ChangePassword(accountPasswordDto);
@@ -44,5 +49,59 @@ namespace InternetBank.UI.Controllers.v1
 	        }
             return Ok(result.Message);
         }
-    }
+
+        /// <summary>
+        /// Show the user's balance (Fifth)
+        /// </summary>
+        /// <param name="accountId"></param>
+        /// <returns></returns>
+        [HttpGet("balance/{accountId}")]
+        public async Task<IActionResult> GetBalance(long accountId)
+        {
+	        var balance = await _accountsService.GetBalance(accountId);
+	        if (balance == null)
+	        {
+		        return NotFound("!حساب یافت نشد");
+	        }
+	        return Ok(balance);
+        }
+
+
+        /// <summary>
+        /// Blocking the user's account by accountID (seventh)
+        /// </summary>
+        /// <param name="accountId"></param>
+        /// <returns></returns>
+        [HttpPut("block/{accountId}")]
+        public async Task<IActionResult> BlockAccount(long accountId)
+        {
+	        try
+	        {
+		        await _accountsService.BlockAccountAsync(accountId);
+		        return Ok(".حساب مسدود شد");
+	        }
+	        catch (Exception ex)
+	        {
+		        return BadRequest(ex.Message);
+	        }
+        }
+        /// <summary>
+        /// Unblocking the user's account by accountID (eighth)
+        /// </summary>
+        /// <param name="accountId"></param>
+        /// <returns></returns>
+        [HttpPut("unblock/{accountId}")]
+        public async Task<IActionResult> UnblockAccount(long accountId)
+        {
+	        try
+	        {
+		        await _accountsService.UnblockAccountAsync(accountId);
+		        return Ok(".حساب رفع مسدودیت شد");
+	        }
+	        catch (Exception ex)
+	        {
+		        return BadRequest(ex.Message);
+	        }
+        }
+	}
 }

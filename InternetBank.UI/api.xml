@@ -23,6 +23,27 @@
             <param name="accountPasswordDto"></param>
             <returns></returns>
         </member>
+        <member name="M:InternetBank.UI.Controllers.v1.AccountController.GetBalance(System.Int64)">
+            <summary>
+            Show the user's balance (Fifth)
+            </summary>
+            <param name="accountId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:InternetBank.UI.Controllers.v1.AccountController.BlockAccount(System.Int64)">
+            <summary>
+            Blocking the user's account by accountID (seventh)
+            </summary>
+            <param name="accountId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:InternetBank.UI.Controllers.v1.AccountController.UnblockAccount(System.Int64)">
+            <summary>
+            Unblocking the user's account by accountID (eighth)
+            </summary>
+            <param name="accountId"></param>
+            <returns></returns>
+        </member>
         <member name="T:InternetBank.UI.Controllers.v1.UserController">
             <summary>
             UserController 

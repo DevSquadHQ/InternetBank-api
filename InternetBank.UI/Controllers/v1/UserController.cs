@@ -50,6 +50,11 @@ namespace InternetBank.UI.Controllers.v1
 				return Problem(errorMessage);
 			}
 
+			if (registerUserDto.Birthdate == DateTime.MinValue)
+			{
+				return BadRequest(new { message = "تاریخ نامعتبر است. لطفاً تاریخ را به فرمت درست وارد کنید." });
+			}
+
 
 			var regesterResult = await _userService.AddUser(registerUserDto);
 

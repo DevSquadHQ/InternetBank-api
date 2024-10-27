@@ -1,4 +1,5 @@
 ﻿using System;
+using InternetBank.Core.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 
 
@@ -12,6 +13,8 @@ namespace InternetBank.Core.Identity
 		public string NationalCode { get; set; }
 
 		public DateTime Birthdate { get; set; }
+
+		public ICollection<Account> Accounts { get; set; }
 
 	}
 }

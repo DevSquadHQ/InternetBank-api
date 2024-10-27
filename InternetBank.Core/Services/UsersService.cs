@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
@@ -26,6 +27,7 @@ namespace InternetBank.Core.Services
 		public async Task<RegisterResultDTO> AddUser(RegisterUserDTO registerUserDto)
 		{
 
+			var parsedDate = DateTime.SpecifyKind(registerUserDto.Birthdate, DateTimeKind.Utc);
 			//Create User
 			ApplicationUser user = new ApplicationUser()
 			{
@@ -34,7 +36,7 @@ namespace InternetBank.Core.Services
 				FirstName = registerUserDto.FirstName,
 				LastName = registerUserDto.LastName,
 				NationalCode = registerUserDto.NationalCode,
-				Birthdate = registerUserDto.Birthdate,
+				Birthdate = parsedDate,
 				UserName = registerUserDto.Email
 			};
 			if (await _usersRepository.NationalCodeExistsAsync(user.NationalCode))
