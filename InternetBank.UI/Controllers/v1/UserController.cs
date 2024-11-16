@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Xml.Linq;
 using DNTPersianUtils.Core;
 using InternetBank.Core.ServiceContracts;
+using Microsoft.AspNetCore.Authorization;
 
 namespace InternetBank.UI.Controllers.v1
 {
@@ -39,15 +40,17 @@ namespace InternetBank.UI.Controllers.v1
 		/// </summary>
 		/// <param name="registerUserDto"></param>
 		/// <returns></returns>
+		[Authorize(Policy = "RequireOtpToken")]
 		[HttpPost("register")]
 		public async Task<ActionResult<ApplicationUser>> CreateUser(RegisterUserDTO registerUserDto)
 		{
+
 			//Validation 
 			if (ModelState.IsValid == false)
 			{
 				string errorMessage = string.Join(" | ", ModelState.Values.SelectMany(v => v.Errors)
 					.Select(e => e.ErrorMessage));
-				return Problem(errorMessage);
+				return Problem(errorMessage,statusCode:400);
 			}
 
 			if (registerUserDto.Birthdate == DateTime.MinValue)
@@ -55,13 +58,16 @@ namespace InternetBank.UI.Controllers.v1
 				return BadRequest(new { message = "تاریخ نامعتبر است. لطفاً تاریخ را به فرمت درست وارد کنید." });
 			}
 
+			if (!await _userService.OtpVerified())
+			{
+				return BadRequest("OTP not verified.");
+			}
+
 
 			var regesterResult = await _userService.AddUser(registerUserDto);
 
 			if (regesterResult.result.Succeeded)
 			{
-				//Sign-in
-				await _signInManager.SignInAsync(regesterResult.user, isPersistent: false);
 
 				return Ok(regesterResult.user);
 			}
@@ -75,7 +81,7 @@ namespace InternetBank.UI.Controllers.v1
 					return Problem(errorMessage+regesterResult.ErrorMessage , statusCode:409);
 				}
 
-				return Problem(errorMessage);
+				return Problem(errorMessage , statusCode:400);
 			}
 
 
@@ -96,7 +102,7 @@ namespace InternetBank.UI.Controllers.v1
 			{
 				string errorMessage = string.Join(" | ", ModelState.Values.SelectMany(v => v.Errors)
 					.Select(e => e.ErrorMessage));
-				return Problem(errorMessage);
+				return BadRequest(errorMessage);
 			}
 
 			await _signInManager.SignOutAsync();
@@ -106,17 +112,17 @@ namespace InternetBank.UI.Controllers.v1
 
 			if (result.Succeeded)
 			{
-				ApplicationUser? user = await _userService.LoginUser(loginUserDto);
+				AuthenticationResponse? user = await _userService.LoginUser(loginUserDto);
 
-				if (user == null)
+				if (user.user == null)
 				{
 					return NoContent();
 				}
 
 				//Sign-in
-				await _signInManager.SignInAsync(user, isPersistent: false);
+				await _signInManager.SignInAsync(user.user, isPersistent: false);
 
-				return Ok(new {FirstName = user.FirstName ,LastName = user.LastName , Email= user.Email});
+				return Ok(user.token);
 
 
 
@@ -134,11 +140,28 @@ namespace InternetBank.UI.Controllers.v1
 		/// </summary>
 		/// <returns></returns>
 
-		[HttpGet("logout")]
+		[HttpPost("logout")]
 		public async Task<IActionResult> GetUserLogOut()
 		{
 			await _signInManager.SignOutAsync();
 			return NoContent();
+		}
+
+		/// <summary>
+		/// Delete USer With User'sAccount
+		/// </summary>
+		/// <returns></returns>
+		[Authorize(Policy = "RequireLoginToken")]
+		[HttpDelete]
+		public async Task<IActionResult> DeleteUser()
+		{
+			var result = await _userService.DeleteUser();
+			if (result)
+			{
+				return Ok();
+			}
+
+			return BadRequest();
 		}
 
 

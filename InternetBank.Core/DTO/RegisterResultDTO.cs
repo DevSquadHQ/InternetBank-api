@@ -14,5 +14,7 @@ namespace InternetBank.Core.DTO
 		public ApplicationUser user { get; set; }
 
 		public string? ErrorMessage { get; set; }
+
+		public bool? isSuccess { get; set; }
 	}
 }

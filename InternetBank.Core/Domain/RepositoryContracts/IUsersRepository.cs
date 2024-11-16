@@ -16,5 +16,9 @@ namespace InternetBank.Core.Domain.RepositoryContracts
 		Task<ApplicationUser?> LoginUser(LoginUserDTO loginUserDto);
 
 		Task<bool> NationalCodeExistsAsync(string nationalCode);
+
+		Task<bool> DeleteUserById(long userId);
+
+		Task<ApplicationUser?> GetUserById (long userId);
 	}
 }

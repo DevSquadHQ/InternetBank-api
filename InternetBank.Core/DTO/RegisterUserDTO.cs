@@ -38,6 +38,7 @@ namespace InternetBank.Core.DTO
 		[DataType(DataType.Password)]
 		[Compare(nameof(Password), ErrorMessage = "پسورد با تاییدیه پسورد مطابقت ندارد")]
 		public string ConfirmPassword { get; set; }
+
 	}
 
 

@@ -12,9 +12,16 @@ namespace InternetBank.Core.ServiceContracts
 	public  interface IUserService
 	{
 		Task<RegisterResultDTO> AddUser(RegisterUserDTO registerUserDto);
-		Task<ApplicationUser?> LoginUser(LoginUserDTO loginUserDto);
+		Task<AuthenticationResponse?> LoginUser(LoginUserDTO loginUserDto);
 
 		string GetUserId();
+
+		Task<bool> OtpVerified();
+
+
+		Task<bool>DeleteUser();
+
+
 
 	}
 }

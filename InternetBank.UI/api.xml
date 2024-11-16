@@ -25,23 +25,94 @@
         </member>
         <member name="M:InternetBank.UI.Controllers.v1.AccountController.GetBalance(System.Int64)">
             <summary>
-            Show the user's balance (Fifth)
+            Show the user's balance 
             </summary>
             <param name="accountId"></param>
             <returns></returns>
         </member>
         <member name="M:InternetBank.UI.Controllers.v1.AccountController.BlockAccount(System.Int64)">
             <summary>
-            Blocking the user's account by accountID (seventh)
+            Blocking the user's account by accountID
             </summary>
             <param name="accountId"></param>
             <returns></returns>
         </member>
         <member name="M:InternetBank.UI.Controllers.v1.AccountController.UnblockAccount(System.Int64)">
             <summary>
-            Unblocking the user's account by accountID (eighth)
+            Unblocking the user's account by accountID 
             </summary>
             <param name="accountId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:InternetBank.UI.Controllers.v1.AccountController.GetAllAccountDetails">
+            <summary>
+            Get All User BankAccounts
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:InternetBank.UI.Controllers.v1.AccountController.GetUserAccountDetail(System.Int64)">
+            <summary>
+            Get User BankAccount
+            </summary>
+            <param name="accountId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:InternetBank.UI.Controllers.v1.AccountController.DeleteAccount(System.Int64)">
+            <summary>
+            Delete AccountById
+            </summary>
+            <param name="accountId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:InternetBank.UI.Controllers.v1.AccountController.ForgotAccountPassword(InternetBank.Core.DTO.ForgotPasswordAccountDTO)">
+            <summary>
+            ForgotPassword For Account
+            </summary>
+            <param name="forgotPasswordAccountDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:InternetBank.UI.Controllers.v1.OtpController.SendOtp(InternetBank.Core.DTO.SendOtpRequestDTO)">
+            <summary>
+            Send-Otp-Code-TO-User
+            </summary>
+            <param name="sendOtpRequest"></param>
+            <returns></returns>
+        </member>
+        <member name="M:InternetBank.UI.Controllers.v1.OtpController.VerifyOtp(InternetBank.Core.DTO.ValidateOtpRequestDTO)">
+            <summary>
+            Verify-Otp-Code
+            </summary>
+            <param name="validateOtpRequest"></param>
+            <returns></returns>
+        </member>
+        <member name="M:InternetBank.UI.Controllers.v1.TransactionController.CardToCard(InternetBank.Core.DTO.CardToCardDTO)">
+            <summary>
+            Card To Card
+            </summary>
+            <param name="cardToCardDTO"></param>
+            <returns></returns>
+        </member>
+        <member name="M:InternetBank.UI.Controllers.v1.TransactionController.TransferMoney(InternetBank.Core.DTO.TransferMoneyRequestDTO)">
+            <summary>
+            Transfer-Money With valid OtpCode
+            </summary>
+            <param name="transferMoneyRequestDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:InternetBank.UI.Controllers.v1.TransactionController.GetCardToCardInfo">
+            <summary>
+            Get All Info From CardToCard Object
+            </summary>
+            <param name="cardToCardDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:InternetBank.UI.Controllers.v1.TransactionController.GetTransactionReport(InternetBank.Core.DTO.TransactionReportRequestDTO)">
+            <summary>
+            Send TransactionReport TO User
+            </summary>
+            <param name="from"></param>
+            <param name="to"></param>
+            <param name="isSuccess"></param>
             <returns></returns>
         </member>
         <member name="T:InternetBank.UI.Controllers.v1.UserController">
@@ -74,6 +145,12 @@
         <member name="M:InternetBank.UI.Controllers.v1.UserController.GetUserLogOut">
             <summary>
             Logout  User 
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:InternetBank.UI.Controllers.v1.UserController.DeleteUser">
+            <summary>
+            Delete USer With User'sAccount
             </summary>
             <returns></returns>
         </member>

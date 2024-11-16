@@ -15,7 +15,12 @@ public interface IAccountsService
     Task<RegisterAccountResultDTO> CreateAccount(RegisterAccountDTO registerAccountDTO);
     Task<ChangeAccountPasswordResponseDTO> ChangePassword(ChangeAccountPasswordDto accountPasswordDto);
     Task<BalanceDTO> GetBalance(long AccountId);
-    Task BlockAccountAsync(long accountId);
-    Task UnblockAccountAsync(long accountId);
+    Task<BlockUnblockDTO> BlockAccountAsync(long accountId);
+    Task<BlockUnblockDTO> UnblockAccountAsync(long accountId);
 
+    Task<AccountDetailsResponseDTO> GetAllAccountDetails();
+    Task<AccountDetailDTOResponse> GetAccountDetail(long accountId);
+    Task<bool> DeleteAccountById(long accountId);
+
+    Task<bool> ForgotAccountPassword(string newPasssowrd , long accountId);
 }

@@ -11,5 +11,6 @@ namespace InternetBank.Core.DTO
 		public long AccountId { get; set; }
 		public long Amount { get; set; }
 		public string AccountNumber { get; set; }
+
 	}
 }

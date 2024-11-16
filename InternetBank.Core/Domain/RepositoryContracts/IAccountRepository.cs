@@ -12,4 +12,11 @@ public interface IAccountRepository
     Task<Account> GetByIdAsync(long accountId);
     Task UpdateAsync(Account account);
     Task<int> GetUserAccountCount(long userId);
+    Task<List<AccountDetailsDTO>> GetAllUserAccount(long userId);
+
+    Task<AccountDetailDTO> GetAccountDetailById(long accountId);
+    Task<bool> DeleteAccountById(long accountId);
+    Task<List<Account>> GetAccountsByUserIdAsync(long userId);
+    Task<Account> GetAccountByCardNumberAsync(string cardNumber);
+
 }

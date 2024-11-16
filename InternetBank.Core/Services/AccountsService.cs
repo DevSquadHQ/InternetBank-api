@@ -4,7 +4,9 @@ using InternetBank.Core.Enums;
 using InternetBank.Core.ServiceContracts;
 using InternetBank.Core.DTO;
 using InternetBank.Core.Domain.Entities;
+using InternetBank.Core.Helpers;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 
 namespace InternetBank.Core.Services;
 
@@ -65,7 +67,11 @@ public class AccountsService : IAccountsService
 	    return new Random().Next(100000, 999999).ToString();
     }
 
-    //Create bankAccount for user
+	/// <summary>
+	/// Create bankAccount for user
+	/// </summary>
+	/// <param name="registerAccountDTO"></param>
+	/// <returns></returns>
 	public async Task<RegisterAccountResultDTO> CreateAccount(RegisterAccountDTO registerAccountDTO)
     {
 	    var userId = _userService.GetUserId();
@@ -76,11 +82,10 @@ public class AccountsService : IAccountsService
 
 		//Get number of User bank Account
 		long userIdLong = long.Parse(userId); //Change String userId type TO long
-		int accountCount = await _accountRepository.GetUserAccountCount(userIdLong);
-
-		if (accountCount >= 2)
+		var cardnumber = CardHelper.GenerateCardNumber(registerAccountDTO.BankName.ToLower());
+		if (cardnumber == null)
 		{
-			return new RegisterAccountResultDTO() { message = "شما نمی‌توانید بیش از دو حساب داشته باشید", success = false };
+			return new RegisterAccountResultDTO() { message = "Invalid bank name. Please provide a valid bank name.", success = false };
 		}
 		// Create account
 		var newAccount = new Account
@@ -88,7 +93,7 @@ public class AccountsService : IAccountsService
 		    accountType = registerAccountDTO.accountType,
 		    Amount = registerAccountDTO.Amount,
 		    AccountNumber = GenerateAccountNumber(registerAccountDTO.accountType),
-		    CardNumber = GenerateCardNumber(),
+		    CardNumber = cardnumber,
 		    Cvv2 = GenerateCVV2(),
 		    ExpireDate = DateTime.UtcNow.AddYears(5),
 			UserId = userIdLong
@@ -111,7 +116,11 @@ public class AccountsService : IAccountsService
         return new RegisterAccountResultDTO() { success = true, responseAccountDto = registerAccountResponseDTO };
     }
 
-	//Change BankAccountPassword
+	/// <summary>
+	/// Change BankAccountPassword
+	/// </summary>
+	/// <param name="accountPasswordDto"></param>
+	/// <returns></returns>
 	public async Task<ChangeAccountPasswordResponseDTO> ChangePassword(ChangeAccountPasswordDto accountPasswordDto)
 	{
 		//GetAccount If exist
@@ -129,7 +138,7 @@ public class AccountsService : IAccountsService
 			return new ChangeAccountPasswordResponseDTO() { Message = "رمز جدید و تکرار آن یکسان نیست", Success = false ,statusCode = 400};
 
 
-		// Change password logic here
+		//Change password logic here
 		account.AccountStaticPassword = _passwordHasher.HashPassword(account, accountPasswordDto.NewPassword);
 		bool changePasswordResult =await _accountRepository.ChangePassword(account);
 		 if (changePasswordResult==false)
@@ -141,30 +150,126 @@ public class AccountsService : IAccountsService
 
 	}
 
-	// Show the user's balance by accountId
+	/// <summary>
+	/// Show the user's balance by accountId
+	/// </summary>
+	/// <param name="accountId"></param>
+	/// <returns></returns>
 	public async Task<BalanceDTO> GetBalance(long accountId)
 	{
 		return await _accountRepository.GetBalance(accountId);
 	}
 
-	// Blocking an account by accountId
-	public async Task BlockAccountAsync(long accountId)
+	/// <summary>
+	/// Blocking an account by accountId
+	/// </summary>
+	/// <param name="accountId"></param>
+	/// <returns></returns>
+	/// <exception cref="Exception"></exception>
+	public async Task<BlockUnblockDTO> BlockAccountAsync(long accountId)
 	{
 		var account = await _accountRepository.GetByIdAsync(accountId);
 		if (account == null)
-			throw new Exception(".حساب یافت نشد");
+		{
+			return new BlockUnblockDTO() { isSuccess = false, Message = "حساب یافت نشد" };
+		}
+		
+		if (account.IsBlocked == 1)
+		{
+			return new BlockUnblockDTO() { isSuccess = false, Message = "این حساب مسدود است" };
+		}
 
 		account.IsBlocked = 1; // Set to 1 for blocked
 		await _accountRepository.UpdateAsync(account);
+		return new BlockUnblockDTO() { isSuccess = true, Message = ".حساب مسدود شد" };
 	}
-	// Unblocking an account by accountId
-	public async Task UnblockAccountAsync(long accountId)
+	/// <summary>
+	/// Unblocking an account by accountId
+	/// </summary>
+	/// <param name="accountId"></param>
+	/// <returns></returns>
+	/// <exception cref="Exception"></exception>
+	public async Task<BlockUnblockDTO> UnblockAccountAsync(long accountId)
 	{
 		var account = await _accountRepository.GetByIdAsync(accountId);
 		if (account == null)
-			throw new Exception(".حساب یافت نشد");
+		{
+			return new BlockUnblockDTO(){isSuccess = false , Message = "حساب یافت نشد"};
+		}
+		if (account.IsBlocked == 0)
+		{
+			
+			return new BlockUnblockDTO(){isSuccess = false , Message = "این حساب مسدود نیست"};
+		}
 
 		account.IsBlocked = 0; // Set to 0 for unblocked
 		await _accountRepository.UpdateAsync(account);
+		return new BlockUnblockDTO(){isSuccess = true , Message = ".حساب رفع مسدودیت شد" };
+	}
+
+	/// <summary>
+	/// GetALl User BankAccounts
+	/// </summary>
+	/// <returns></returns>
+	public async Task<AccountDetailsResponseDTO> GetAllAccountDetails()
+	{
+		var userId = long.Parse(_userService.GetUserId());
+		var accounts = await _accountRepository.GetAllUserAccount(userId);
+		if (accounts == null)
+		{
+			return new AccountDetailsResponseDTO() { isSuccess = false, message = "اکانتی برای این یوزر یافت نشد" };
+
+		}
+
+		return new AccountDetailsResponseDTO()
+			{ isSuccess = true, message = "تمامی اکانت های یوزر یافت شد", accountDetails = accounts };
+	}
+
+	/// <summary>
+	/// Get User BankAccount - Find just one account
+	/// </summary>
+	/// <param name="accountId"></param>
+	/// <returns></returns>
+	public async Task<AccountDetailDTOResponse> GetAccountDetail(long accountId)
+	{
+		var account = await _accountRepository.GetAccountDetailById(accountId);
+		if (account == null)
+		{
+			return new AccountDetailDTOResponse() { isSuccess = false, message = "اکانتی با این آیدی یافت نشد" };
+		}
+
+		return new AccountDetailDTOResponse()
+			{ accountDetail = account, isSuccess = true, message = "اکانت با موفقیت پیدا شد" };
+
+	}
+
+	/// <summary>
+	/// Delete Account With ID
+	/// </summary>
+	/// <param name="accountId"></param>
+	/// <returns></returns>
+	public async Task<bool> DeleteAccountById(long accountId)
+	{
+		return await _accountRepository.DeleteAccountById(accountId);
+	}
+
+	/// <summary>
+	/// ForgotAccountPassword for Each BankAccount
+	/// </summary>
+	/// <param name="newPasssowrd"></param>
+	/// <param name="accountId"></param>
+	/// <returns></returns>
+	public async Task<bool> ForgotAccountPassword(string newPassword , long accountId)
+	{
+		var account = await _accountRepository.GetByIdAsync(accountId);
+		if (account == null)
+		{
+			return false;
+		}
+
+		account.AccountStaticPassword = _passwordHasher.HashPassword(account, newPassword);
+		return await _accountRepository.ChangePassword(account);
+
+
 	}
 }

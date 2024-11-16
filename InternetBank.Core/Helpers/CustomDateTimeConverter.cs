@@ -16,19 +16,19 @@ namespace InternetBank.Core.Helpers
 			string dateString = reader.GetString();
 			DateTime parsedDate;
 
-			// استفاده از TryParse برای قبول فرمت‌های مختلف تاریخ
+			// Accept other format
 			if (DateTime.TryParse(dateString, CultureInfo.InvariantCulture, DateTimeStyles.None, out parsedDate))
 			{
-				return parsedDate; // تاریخ به درستی پارس شد
+				return parsedDate; // Successful pars Date
 			}
 
-			// در صورت عدم موفقیت، یک استثنا ایجاد کنید
+			// Error Type
 			return DateTime.MinValue;
 		}
 
 		public override void Write(Utf8JsonWriter writer, DateTime value, JsonSerializerOptions options)
 		{
-			writer.WriteStringValue(value.ToString("yyyy-MM-dd")); // تبدیل به فرمت دلخواه
+			writer.WriteStringValue(value.ToString("yyyy-MM-dd")); // Convert TO Format
 		}
 	}
 }

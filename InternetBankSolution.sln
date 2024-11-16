@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.34916.146
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InternetBank.UI", "InternetBank.UI\InternetBank.UI.csproj", "{F5903A56-F8D5-49BD-A3F6-D9BEA69DAD8D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InternetBank.UI", "InternetBank.UI\InternetBank.UI.csproj", "{F5903A56-F8D5-49BD-A3F6-D9BEA69DAD8D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{D18A6997-A464-4C20-973E-3AC54B8263F2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InternetBank.Core", "InternetBank.Core\InternetBank.Core.csproj", "{7F5AEC6B-2FD5-4DBE-A297-852FF5CD2A5B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InternetBank.Core", "InternetBank.Core\InternetBank.Core.csproj", "{7F5AEC6B-2FD5-4DBE-A297-852FF5CD2A5B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InternetBank.Infrastructure", "InternetBank.Infrastructure\InternetBank.Infrastructure.csproj", "{D0864F52-EAAD-4818-8E86-661267908749}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InternetBank.Infrastructure", "InternetBank.Infrastructure\InternetBank.Infrastructure.csproj", "{D0864F52-EAAD-4818-8E86-661267908749}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

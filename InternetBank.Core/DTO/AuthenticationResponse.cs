@@ -3,18 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using InternetBank.Core.Identity;
 
 namespace InternetBank.Core.DTO
 {
 	public class AuthenticationResponse
 	{
-		public string? FirstName { get; set; } = string.Empty;
-		public string? LastName { get; set; } = string.Empty;
-		public string? Token { get; set; } = string.Empty;
-		public string? Email { get; set; } = string.Empty;
+     public ApplicationUser user { get; set; }
 
-		public DateTime Expiration { get; set; }
-
+	 public string token { get; set; }
 
 	}
 }

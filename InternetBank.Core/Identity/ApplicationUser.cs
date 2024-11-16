@@ -16,5 +16,7 @@ namespace InternetBank.Core.Identity
 
 		public ICollection<Account> Accounts { get; set; }
 
+		public bool IsActive { get; set; } = false;
+
 	}
 }

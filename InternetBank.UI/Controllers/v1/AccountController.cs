@@ -1,6 +1,7 @@
 ﻿using Asp.Versioning;
 using InternetBank.Core.DTO;
 using InternetBank.Core.ServiceContracts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,7 +11,8 @@ namespace InternetBank.UI.Controllers.v1
     /// Account Manager
     /// </summary>
     [ApiVersion("1.0")]
-    public class AccountController : CustomControllerBase
+	[Authorize(Policy = "RequireLoginToken")]
+	public class AccountController : CustomControllerBase
     {
         private readonly IAccountsService _accountsService;
 
@@ -51,12 +53,12 @@ namespace InternetBank.UI.Controllers.v1
         }
 
         /// <summary>
-        /// Show the user's balance (Fifth)
+        /// Show the user's balance 
         /// </summary>
         /// <param name="accountId"></param>
         /// <returns></returns>
         [HttpGet("balance/{accountId}")]
-        public async Task<IActionResult> GetBalance(long accountId)
+        public async Task<ActionResult<BalanceDTO>> GetBalance(long accountId)
         {
 	        var balance = await _accountsService.GetBalance(accountId);
 	        if (balance == null)
@@ -68,7 +70,7 @@ namespace InternetBank.UI.Controllers.v1
 
 
         /// <summary>
-        /// Blocking the user's account by accountID (seventh)
+        /// Blocking the user's account by accountID
         /// </summary>
         /// <param name="accountId"></param>
         /// <returns></returns>
@@ -77,8 +79,12 @@ namespace InternetBank.UI.Controllers.v1
         {
 	        try
 	        {
-		        await _accountsService.BlockAccountAsync(accountId);
-		        return Ok(".حساب مسدود شد");
+		        var result = await _accountsService.BlockAccountAsync(accountId);
+		        if (result.isSuccess == false)
+		        {
+			        return NotFound(result.Message);
+		        }
+		        return Ok(result.Message);
 	        }
 	        catch (Exception ex)
 	        {
@@ -86,7 +92,7 @@ namespace InternetBank.UI.Controllers.v1
 	        }
         }
         /// <summary>
-        /// Unblocking the user's account by accountID (eighth)
+        /// Unblocking the user's account by accountID 
         /// </summary>
         /// <param name="accountId"></param>
         /// <returns></returns>
@@ -95,13 +101,88 @@ namespace InternetBank.UI.Controllers.v1
         {
 	        try
 	        {
-		        await _accountsService.UnblockAccountAsync(accountId);
-		        return Ok(".حساب رفع مسدودیت شد");
+		        var result = await _accountsService.UnblockAccountAsync(accountId);
+		        if (result.isSuccess == false)
+		        {
+			        return NotFound(result.Message);
+		        }
+				return Ok(result.Message);
 	        }
 	        catch (Exception ex)
 	        {
 		        return BadRequest(ex.Message);
 	        }
         }
+
+
+        /// <summary>
+        /// Get All User BankAccounts
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult<AccountDetailsResponseDTO>> GetAllAccountDetails()
+        {
+	        if (!ModelState.IsValid) return BadRequest(ModelState);
+
+	        var result = await _accountsService.GetAllAccountDetails();
+
+	        if (result.isSuccess == false)
+	        {
+		        return NotFound(result.message);
+	        }
+            return Ok(result.accountDetails);
+        }
+
+        /// <summary>
+        /// Get User BankAccount
+        /// </summary>
+        /// <param name="accountId"></param>
+        /// <returns></returns>
+        [HttpGet("{accountId}")]
+        public async Task<ActionResult<AccountDetailDTO>> GetUserAccountDetail(long accountId)
+        {
+	        var result = await _accountsService.GetAccountDetail(accountId);
+	        if (result.isSuccess == false)
+	        {
+		        return NotFound(result.message);
+	        }
+
+	        return Ok(result.accountDetail);
+        }
+
+        /// <summary>
+        /// Delete AccountById
+        /// </summary>
+        /// <param name="accountId"></param>
+        /// <returns></returns>
+        [HttpDelete("{accountId}")]
+        public async Task<IActionResult> DeleteAccount(long accountId)
+        {
+	        var result = await _accountsService.DeleteAccountById(accountId);
+	        if (result)
+	        {
+				return Ok();
+			}
+
+	        return BadRequest();
+        }
+
+        /// <summary>
+        /// ForgotPassword For Account
+        /// </summary>
+        /// <param name="forgotPasswordAccountDto"></param>
+        /// <returns></returns>
+        [HttpPut("forgot-password")]
+        public async Task<IActionResult> ForgotAccountPassword(ForgotPasswordAccountDTO forgotPasswordAccountDto)
+        {
+	        var result = await _accountsService.ForgotAccountPassword(forgotPasswordAccountDto.newPassword,
+		        forgotPasswordAccountDto.accountId);
+	        if (result)
+	        {
+		        return Ok();
+	        }
+            return BadRequest();
+        }
+
 	}
 }

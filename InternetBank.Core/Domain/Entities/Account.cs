@@ -28,4 +28,6 @@ public class Account
 
     public long UserId { get; set; }
     public ApplicationUser User { get; set; }
+
+    public ICollection<Transaction> Transactions { get; set; }
 }

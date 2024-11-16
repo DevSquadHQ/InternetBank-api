@@ -19,6 +19,22 @@ namespace InternetBank.Infrastructure.DbContext
 
 		}
 		public ApplicationDbContext(){}
+
 		public DbSet<Account> Accounts { get; set; }
+		public DbSet<OtpCode> OtpCodes { get; set; }
+
+		public DbSet<Transaction> Transactions { get; set; }
+
+
+		protected override void OnModelCreating(ModelBuilder modelBuilder)
+		{
+			base.OnModelCreating(modelBuilder);
+
+			modelBuilder.Entity<ApplicationUser>()
+				.HasMany(u => u.Accounts)
+				.WithOne(a => a.User)
+				.HasForeignKey(a => a.UserId)
+				.OnDelete(DeleteBehavior.Cascade);
+		}
 	}
 }
